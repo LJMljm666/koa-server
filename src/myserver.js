@@ -26,7 +26,7 @@ const PORT = 9999;
 const app = new Koa();
 
 app.use(Cors());
-app.use(Serve({rootDir: 'public', rootPath: '/public'}));
+app.use(Serve({rootDir: path.resolve(__dirname, '../public'), rootPath: '/public'}));
 app.use(KoaBody({multipart: true}));
 
 // app.use(async (ctx, next) => {
