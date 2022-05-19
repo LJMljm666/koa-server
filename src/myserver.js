@@ -1,16 +1,33 @@
 const http = require('http');
 const Koa = require('koa');
 const Serve = require('koa-static-server');
-const koaBody = require('koa-body');
-const router = require('./routes');
+const KoaBody = require('koa-body');
+const Cors = require('@koa/cors');
 const path = require('path');
+const fs = require('fs');
+
+const router = require('./routes');
+
+const htmlDir = path.resolve(__dirname, '../public/html');
+if(!fs.existsSync(htmlDir)) {
+  fs.mkdir(htmlDir, err => {
+    if(err) console.error('html文件夹创建失败！！！')
+  });
+}
+
+// 每天一点钟删除temp目录 node-schedule
+// const job = schedule.scheduleJob('1 * * *', function(){
+//   fs.existsSync(tempDir) && fs.rmSync(tempDir, { recursive: true });
+//   console.log('删除时间:', new Date().toLocaleString());
+// });
 
 const PORT = 9999;
 
 const app = new Koa();
 
-app.use(Serve({rootDir: path.resolve(__dirname, '../public')}));
-app.use(koaBody({multipart: true}));
+app.use(Cors());
+app.use(Serve({rootDir: 'public', rootPath: '/public'}));
+app.use(KoaBody({multipart: true}));
 
 // app.use(async (ctx, next) => {
 //     console.log(ctx);

@@ -12,7 +12,7 @@
 /build
 
 # temp
-/public/temp
+/public/html/temp
 
 # misc
 .DS_Store
