@@ -5,6 +5,7 @@ const KoaBody = require('koa-body');
 const Cors = require('@koa/cors');
 const path = require('path');
 const fs = require('fs');
+const jobs = require('./timedTask');
 
 const router = require('./routes');
 
@@ -14,6 +15,8 @@ if(!fs.existsSync(htmlDir)) {
     if(err) console.error('html文件夹创建失败！！！')
   });
 }
+
+jobs();
 
 // 每天一点钟删除temp目录 node-schedule
 // const job = schedule.scheduleJob('1 * * *', function(){
