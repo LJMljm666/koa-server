@@ -13,7 +13,7 @@ const courseMap = {
 
 const courseImg = 'http://ydlunacommon-cdn.nos-jd.163yun.com/6183d361ddd444cc9b7b51cac1960811.jpg';
 
-const img2 = 'http://ydlunacommon-cdn.nos-jd.163yun.com/9cf0a7e12d858c01722c679ceb053454.gif';
+const img2 = 'http://dingyue.ws.126.net/2022/1120/908b17a5g00rln9mx009qc000n000ixm.gif';
 
 const timeMap = {
   0: '50 7',
@@ -30,7 +30,7 @@ function jobs() {
           axios.post('http://www.pushplus.plus/send', {
             token: 'a547d1fa9fba409f8bc6cb1a3aa880cc',
             to: '3c5211360ba04d6e8bc5a3bc1232de84',
-            title: '小朱闯上课啦！！！',
+            title: '小^(*￣(oo)￣)^上课啦！！!',
             content: `<img src="${courseImg}" /><br/><img src="${img2}" />`,
             template: 'html',
           })
@@ -38,11 +38,11 @@ function jobs() {
       }
     })
   })
-  // schedule.scheduleJob('0 13 18 * * 6', function(){
+  // schedule.scheduleJob('3 * * * * *', function(){
   //   axios.post('http://www.pushplus.plus/send', {
   //     token: 'a547d1fa9fba409f8bc6cb1a3aa880cc',
-  //     to: '3c5211360ba04d6e8bc5a3bc1232de84',
-  //     title: '小朱闯上课啦！！！',
+  //     // to: '3c5211360ba04d6e8bc5a3bc1232de84',
+  //     title: '小^(*￣(oo)￣)^上课啦！！!',
   //     content: `<img src="${courseImg}" /><br/><img src="${img2}" />`,
   //     template: 'html',
   //   }).then(res => {
