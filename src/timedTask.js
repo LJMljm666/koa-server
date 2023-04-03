@@ -11,7 +11,7 @@ const courseMap = {
   7: [0,0,0,1],
 }
 
-const courseImg = 'http://ydlunacommon-cdn.nos-jd.163yun.com/6183d361ddd444cc9b7b51cac1960811.jpg';
+const courseImg = '';
 
 const img2 = 'http://dingyue.ws.126.net/2022/1120/908b17a5g00rln9mx009qc000n000ixm.gif';
 

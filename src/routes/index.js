@@ -31,4 +31,9 @@ router.post('/generateHtml', async (ctx, next) => {
   }
 })
 
+router.get('/socket.io', async (ctx) => {
+  console.log('socket', ctx)
+  ctx.body = '';
+});
+
 module.exports = router;
