@@ -26,7 +26,7 @@ jobs();
 //   console.log('删除时间:', new Date().toLocaleString());
 // });
 
-const PORT = 9999;
+const PORT = process.env.PORT ?? 9999;
 
 const app = new Koa();
 
