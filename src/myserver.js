@@ -6,10 +6,12 @@ const Cors = require('@koa/cors');
 const path = require('path');
 const fs = require('fs');
 const { Server } = require("socket.io");
-const { nanoid } = require('nanoid');
+const { customAlphabet } = require('nanoid');
 const jobs = require('./timedTask');
 
 const router = require('./routes');
+
+const nanoid = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', 10)
 
 const htmlDir = path.resolve(__dirname, '../public/html');
 if(!fs.existsSync(htmlDir)) {
@@ -77,7 +79,7 @@ const io = new Server(httpServer);
 
 io.on('connection', (socket) => {
   socket.on('createRoom', (username) => {
-    const roomId = nanoid(10);
+    const roomId = nanoid();
     const thisRoom = { roomId, users: [username] };
     rooms.set(roomId, thisRoom);
     // https://socket.io/docs/v4/rooms/
@@ -91,7 +93,6 @@ io.on('connection', (socket) => {
 
   socket.on('joinRoom', ({ username, roomId }) => {
     const thisRoom = rooms.get(roomId);
-    console.log(thisRoom);
     if (!thisRoom) {
       return socket.emit('joinRoom');
     }
@@ -110,7 +111,6 @@ io.on('connection', (socket) => {
   });
 
   socket.on('exitRoom', ({ username, roomId }) => {
-    console.log(rooms);
     const thisRoom = rooms.get(roomId);
     if (!thisRoom) return;
     const thisUserIndex = thisRoom.users.indexOf(username);
@@ -124,26 +124,24 @@ io.on('connection', (socket) => {
       socket.leave(roomId);
       socket.emit('exitRoom', 'success');
     }
-    console.log(rooms);
   });
 
   socket.on('textChat', ({ roomId, chatText, username }) => {
+    // 给房间内每个socket发送消息
     io.to(roomId).emit('textChat', { username, chatText });
   });
 
   socket.on('ice_candidate', (data) => {
-    // console.log('ice_candidate', data);
-    io.to(data.roomId).emit('ice_candidate', data);
+    socket.to(data.roomId).emit('ice_candidate', data);
   });
 
   socket.on('video_offer', (data) => {
-    // console.log('video_offer', data);
-    io.to(data.roomId).emit('video_offer', data);
+    socket.to(data.roomId).emit('video_offer', data);
   });
 
   socket.on('video_answer', (data) => {
-    // console.log('video_answer', data);
-    io.to(data.roomId).emit('video_answer', data);
+    // 给房间内除非发送者外发送消息
+    socket.to(data.roomId).emit('video_answer', data);
   });
 
   socket.on('disconnect', (reason) => {
